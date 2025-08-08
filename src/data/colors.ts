@@ -1,5 +1,6 @@
 export const colors = {
     vermelhoPrincipal: "#E62429",
+    vermelhoPrincipal2: "#e50914",
     pretoSuave: "#1A1A1A",
     brancoSuave: "#F9F9F9",
     cinzaClaro: "#E0E0E0",

@@ -7,7 +7,7 @@ import { ListMain } from "@/components/ListMain";
 
 export default function Home() {
   return (
-    <Container bgColor={colors.pretoSuave} >
+    <Container>
       <HeaderBar />
     
       <ListMain />

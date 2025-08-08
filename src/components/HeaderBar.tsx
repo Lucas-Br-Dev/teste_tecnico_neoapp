@@ -3,33 +3,44 @@ import { CartIcon } from "@/ui/CartIcon";
 import styled from "styled-components";
 
 const HeaderStyled = styled.header`
-background-color: ${colors.vermelhoPrincipal};
-padding: 0 10px;
-height: 50px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-bottom-left-radius: 8px;
-border-bottom-right-radius: 8px;
+    background-color: ${colors.cinzaEscuro};
+    padding: 0 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 `
 const Logo = styled.p`
+    border-radius: 5px;
     font-size: 32px;
     font-weight: bold;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${colors.vermelhoPrincipal};
 `
 
 const Cart = styled.div`
-    width: 28px;
+    display: flex;
+    justify-content: end;
+    width: 30px;
     margin-right: 20px;
     transition: 0.2s ease-in-out;
     &:hover{
-        width: 34px;
+        transform: rotate(45deg);
         cursor: pointer;
+        color: white;
     }
 `
 
 export const HeaderBar = () => {
     return (
         <HeaderStyled>
+            <div></div>
             <Logo>Marvell</Logo>
             <Cart>{CartIcon}</Cart>
         </HeaderStyled>
