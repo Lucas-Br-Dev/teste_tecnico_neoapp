@@ -37,10 +37,15 @@ const Cart = styled.div`
     }
 `
 
+const Area = styled.div`
+    width: 30px;
+    margin-left: 20px;
+`
+
 export const HeaderBar = () => {
     return (
         <HeaderStyled>
-            <div></div>
+            <Area></Area>
             <Logo>Marvell</Logo>
             <Cart>{CartIcon}</Cart>
         </HeaderStyled>

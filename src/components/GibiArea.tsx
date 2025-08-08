@@ -6,6 +6,7 @@ import styled from "styled-components"
 type Props = {
     item: GibiReqType;
     key: number;
+    onClick: () => void
 };
 
 const GibiDiv = styled.div`
@@ -43,18 +44,18 @@ const TitleArea = styled.div`
     border: 2px dotted ${colors.cinzaEscuro};
     font-size: 20px;
 `
-export const GibiArea = ({ item }: Props) => {
+export const GibiArea = ({ item, onClick }: Props) => {
     return (
         <GibiDiv key={item.id} >
             <Thumbnails
-                onClick={() => { console.log("foi") }}
+                onClick={onClick}
                 src={`${item.thumbnail.path}.${item.thumbnail.extension}`}
                 alt={item.title}
             ></Thumbnails>
             <div>
                 <TitleArea>{item.series.name}</TitleArea>
                 <Buttons bgcolor={colors.vermelhoPrincipal} hovercolor={colors.vermelhoPrincipal2} >Comprar</Buttons>
-                <Buttons bgcolor={colors.cinzaEscuro} hovercolor={colors.pretoSuave} >Ver Mais</Buttons>
+                <Buttons onClick={onClick} bgcolor={colors.cinzaEscuro} hovercolor={colors.pretoSuave} >Ver Mais</Buttons>
             </div>
         </GibiDiv>
     )

@@ -5,6 +5,7 @@ import md5 from 'crypto-js/md5';
 import { useEffect, useState } from "react";
 import { GibiReqType } from "@/types/GibiItemsType";
 import { Loaded } from "./Loaded";
+import { SelectGibiModal } from "./SelectGibiModal";
 
 const Grid = styled.div`
   min-height: 100vh;
@@ -18,6 +19,15 @@ const Grid = styled.div`
 
 export const ListMain = () => {
     const [gibiItems, setGibiItems] = useState<GibiReqType[] | undefined>()
+    const [selectGibi, setSelectGibi] = useState<null | GibiReqType>(null)
+
+    useEffect(() => {
+        if(selectGibi !== null){
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            return
+        }
+    }, [selectGibi])
 
     const publicKey = process.env.NEXT_PUBLIC_MARVEL_PUBLIC_KEY!;
     const privateKey = process.env.NEXT_PUBLIC_MARVEL_PRIVATE_KEY!;
@@ -43,10 +53,12 @@ export const ListMain = () => {
         <main>
             {gibiItems === undefined ?
                 <Loaded />
-                :
-                <Grid>
-                    {gibiItems.map((item) => (<GibiArea key={item.id} item={item} />))}
-                </Grid>
+                : selectGibi ?
+                    <SelectGibiModal selectGibi={selectGibi} setSelectGibi={() => setSelectGibi(null)} />
+                    :
+                    <Grid>
+                        {gibiItems.map((item) => (<GibiArea key={item.id} item={item} onClick={() => (setSelectGibi(item))} />))}
+                    </Grid>
             }
         </main>
     )
