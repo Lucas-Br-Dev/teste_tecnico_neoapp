@@ -1,4 +1,3 @@
-import { colors } from "@/data/colors";
 import styled from "styled-components";
 
 type props = {
@@ -17,5 +16,8 @@ export const Buttons = styled.button<props>`
     &:hover{
         background-color: ${(props) => (props.hovercolor)};
         cursor: pointer;
+    }
+    @media screen and (min-width: 900px) {
+        max-width: 280px;
     }
 `

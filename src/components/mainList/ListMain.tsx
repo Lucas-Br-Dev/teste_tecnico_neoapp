@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { GibiReqType } from "@/types/GibiItemsType";
 import { Loaded } from "./Loaded";
 import { SelectGibiModal } from "./SelectGibiModal";
+import { AnimationRigthToLeft } from "@/styles/AnimationRigthToLeft";
 
 const Grid = styled.div`
   min-height: 100vh;
@@ -17,13 +18,17 @@ const Grid = styled.div`
   grid-template-rows: auto;
 `;
 
+const Main = styled.main`
+    width: 100%;
+`
+
 export const ListMain = () => {
     const [gibiItems, setGibiItems] = useState<GibiReqType[] | undefined>()
     const [selectGibi, setSelectGibi] = useState<null | GibiReqType>(null)
 
     useEffect(() => {
-        if(selectGibi !== null){
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (selectGibi !== null) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             return
         }
@@ -50,16 +55,18 @@ export const ListMain = () => {
     }, []);
 
     return (
-        <main>
+        <Main>
             {gibiItems === undefined ?
                 <Loaded />
                 : selectGibi ?
-                    <SelectGibiModal selectGibi={selectGibi} setSelectGibi={() => setSelectGibi(null)} />
+                    <AnimationRigthToLeft>
+                        <SelectGibiModal selectGibi={selectGibi} setSelectGibi={() => setSelectGibi(null)} />
+                    </AnimationRigthToLeft>
                     :
                     <Grid>
                         {gibiItems.map((item) => (<GibiArea key={item.id} item={item} onClick={() => (setSelectGibi(item))} />))}
                     </Grid>
             }
-        </main>
+        </Main>
     )
 }

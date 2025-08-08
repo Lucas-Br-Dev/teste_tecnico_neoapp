@@ -1,6 +1,8 @@
+import { ContextCart } from "@/context/cartContext";
 import { colors } from "@/data/colors"
 import { Buttons } from "@/styles/Buttons";
 import { GibiReqType } from "@/types/GibiItemsType"
+import { useContext } from "react";
 import styled from "styled-components"
 
 type Props = {
@@ -36,7 +38,6 @@ const Thumbnails = styled.img`
 
 const TitleArea = styled.div`
     background-color: ${colors.cinzaClaro};
-    margin: 10px 0px;
     padding: 5px;
     border-radius: 5px;
     text-align: center;
@@ -44,7 +45,30 @@ const TitleArea = styled.div`
     border: 2px dotted ${colors.cinzaEscuro};
     font-size: 20px;
 `
+
+const Div = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+`
 export const GibiArea = ({ item, onClick }: Props) => {
+
+    const context = useContext(ContextCart)
+    if (!context) return null;
+    const { dispatch } = context
+
+    const itemCart = {
+            id: item.id,
+            title: item.title,
+            price: item.prices[0].price,
+            quantity: 1,
+            thumbnail: {
+                path: item.thumbnail.path,
+                extension: item.thumbnail.extension,
+              }
+        }
+
     return (
         <GibiDiv key={item.id} >
             <Thumbnails
@@ -52,11 +76,11 @@ export const GibiArea = ({ item, onClick }: Props) => {
                 src={`${item.thumbnail.path}.${item.thumbnail.extension}`}
                 alt={item.title}
             ></Thumbnails>
-            <div>
+            <Div>
                 <TitleArea>{item.series.name}</TitleArea>
-                <Buttons bgcolor={colors.vermelhoPrincipal} hovercolor={colors.vermelhoPrincipal2} >Comprar</Buttons>
-                <Buttons onClick={onClick} bgcolor={colors.cinzaEscuro} hovercolor={colors.pretoSuave} >Ver Mais</Buttons>
-            </div>
+                <Buttons onClick={() => dispatch({type:"AddCart", payload: itemCart})} bgcolor={colors.vermelhoPrincipal} hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
+                <Buttons onClick={onClick} bgcolor={colors.cinzaEscuro} hovercolor={colors.pretoSuave} >See More</Buttons>
+            </Div>
         </GibiDiv>
     )
 }

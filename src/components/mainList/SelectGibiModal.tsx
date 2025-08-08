@@ -3,8 +3,9 @@ import { Buttons } from "@/styles/Buttons";
 import { GibiReqType } from "@/types/GibiItemsType"
 import { ArrowLeftCircle } from "@/ui/ArrowLeftCircle";
 import styled from "styled-components";
-import { GibiArea } from "./GibiArea";
-import { creatorsType } from "@/types/CreatorsType";
+import { creatorsType } from "@/types/creatorsType"; 
+import { useContext } from "react";
+import { ContextCart } from "@/context/cartContext";
 
 type Props = {
     selectGibi: GibiReqType;
@@ -13,6 +14,7 @@ type Props = {
 
 const ModalArea = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -43,21 +45,25 @@ const Thumbnails = styled.img`
         height: 400px;
         margin: auto;
     }
-
 `
 
 const ModalPrice = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     border-radius: 5px;
-    padding: 10px;
-    background-color: ${colors.cinzaClaro};
+    @media screen and (max-width: 900){
+        width: 100%;
+        
+    }
 `
 
 const P = styled.p`
     font-size: 28px;
     margin-bottom: 10px;
+    background-color: ${colors.cinzaClaro};
+    border-radius: 5px;
+    padding: 5px;
     @media screen and (max-width: 900px) {
         font-size: 20px;
     }
@@ -66,15 +72,16 @@ const P = styled.p`
 
 const Price = styled.div`
     display: flex;
-    flex-direction: column;
-    text-align: center;
+    align-items: center;
+    justify-content: space-evenly;
     background-color: ${colors.cinzaEscuro};
     border-radius: 10px;
     padding: 10px;
     color: white;
-    font-size: 40px;
+    font-size: 32px;
+    gap: 16px;
     @media screen and (max-width: 900px) {
-        font-size: 26px;
+        font-size: 28px;
     }
 
 `
@@ -125,6 +132,20 @@ const lancamento = (onsaleDate: string) => {
 
 export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
 
+    const context = useContext(ContextCart)
+    if(!context) return null;
+    const {dispatch} = context
+
+    const itemCart = {
+        id: selectGibi.id,
+        title: selectGibi.title,
+        price: selectGibi.prices[0].price,
+        quantity: 1,
+        thumbnail: {
+            path: selectGibi.thumbnail.path,
+            extension: selectGibi.thumbnail.extension,
+          }
+    }
 
 
     return (
@@ -149,7 +170,7 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
 
                     <Price>
                         <h1>${selectGibi.prices[0].price}</h1>
-                        <Buttons bgcolor={colors.vermelhoPrincipal} hovercolor={colors.vermelhoPrincipal2} >COMPRAR</Buttons>
+                        <Buttons onClick={() => dispatch({type:"AddCart", payload: itemCart})} bgcolor={colors.vermelhoPrincipal} hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
                     </Price>
 
                 </ModalPrice>

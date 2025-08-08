@@ -1,6 +1,12 @@
+import { ContextCart } from "@/context/cartContext";
 import { colors } from "@/data/colors";
 import { CartIcon } from "@/ui/CartIcon";
+import { useContext } from "react";
 import styled from "styled-components";
+
+type Props = {
+    onClick: () => void
+}
 
 const HeaderStyled = styled.header`
     background-color: ${colors.cinzaEscuro};
@@ -42,12 +48,15 @@ const Area = styled.div`
     margin-left: 20px;
 `
 
-export const HeaderBar = () => {
+export const HeaderBar = ({ onClick }:Props ) => {
+
+    const context = useContext(ContextCart)
+
     return (
         <HeaderStyled>
             <Area></Area>
-            <Logo>Marvell</Logo>
-            <Cart>{CartIcon}</Cart>
+            <Logo>Marvell</Logo>             
+            <Cart onClick={onClick} >{CartIcon}{context?.gibiCart.length}</Cart>
         </HeaderStyled>
 
     )
