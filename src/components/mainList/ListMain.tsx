@@ -8,6 +8,7 @@ import { Loaded } from "./Loaded";
 import { SelectGibiModal } from "./SelectGibiModal";
 import { AnimationRigthToLeft } from "@/styles/AnimationRigthToLeft";
 
+
 const Grid = styled.div`
   min-height: 100vh;
   width: 100%;
@@ -23,7 +24,7 @@ const Main = styled.main`
 `
 
 export const ListMain = () => {
-    const [gibiItems, setGibiItems] = useState<GibiReqType[] | undefined>()
+    const [gibiItems, setGibiItems] = useState<GibiReqType[] | null>(null);
     const [selectGibi, setSelectGibi] = useState<null | GibiReqType>(null)
 
     useEffect(() => {
@@ -56,17 +57,24 @@ export const ListMain = () => {
 
     return (
         <Main>
-            {gibiItems === undefined ?
-                <Loaded />
-                : selectGibi ?
-                    <AnimationRigthToLeft>
-                        <SelectGibiModal selectGibi={selectGibi} setSelectGibi={() => setSelectGibi(null)} />
-                    </AnimationRigthToLeft>
-                    :
-                    <Grid>
-                        {gibiItems.map((item) => (<GibiArea key={item.id} item={item} onClick={() => (setSelectGibi(item))} />))}
-                    </Grid>
-            }
+            {selectGibi ? (
+                <AnimationRigthToLeft>
+                    <SelectGibiModal selectGibi={selectGibi} setSelectGibi={() => setSelectGibi(null)} />
+                </AnimationRigthToLeft>
+            ) : (
+                <>
+                    {gibiItems === null ? (
+                        <Loaded />
+                    ) : (
+                        <Grid>
+                            {gibiItems.map(item => (
+                                <GibiArea key={item.id} item={item} onClick={() => setSelectGibi(item)} />
+                            ))}
+                        </Grid>
+                    )}
+                </>
+            )}
         </Main>
-    )
+    );
 }
+export default ListMain

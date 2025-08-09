@@ -122,17 +122,17 @@ export const ModalCart = ({ setModal }: Props) => {
                     <Items>
                         {context?.gibiCart.map((item) => (
                             <ItemCart
-                            key={item.id}
-                             itemCart={item} 
-                             handleAdd={() => dispatch({type:"AddQuantity", payload: {id: item.id}})}
-                             handleReduce={() => dispatch({type:"RemoveQuantity", payload:{id: item.id}})}
-                             handleDelete={() => dispatch({type:"DeleteItem", payload:{id: item.id}})}
-                             />
+                                key={item.id}
+                                itemCart={item}
+                                handleAdd={() => dispatch({ type: "AddQuantity", payload: { id: item.id } })}
+                                handleReduce={() => dispatch({ type: "RemoveQuantity", payload: { id: item.id } })}
+                                handleDelete={() => dispatch({ type: "DeleteItem", payload: { id: item.id } })}
+                            />
                         ))}
                         <BuyEle>
                             <CupomArea>Value Total: ${valueTotal.toFixed(2)}</CupomArea>
                             <CupomArea><Cupom placeholder="CUPOM..." maxLength={4} type="text" /><ArrowEle>{ArrowRigth}</ArrowEle></CupomArea>
-                            <Buttons bgcolor={colors.vermelhoPrincipal} hovercolor={colors.vermelhoPrincipal2} >Comprar</Buttons>
+                            <Buttons $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >Comprar</Buttons>
                         </BuyEle>
                     </Items>
                 }

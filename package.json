@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:web": "npx cypress open",
+    "cypress:headless": "npx cypress open run"
   },
   "dependencies": {
     "@babel/runtime": "^7.28.2",
@@ -24,6 +26,7 @@
     "@types/react-dom": "^19",
     "@types/styled-components": "^5.1.34",
     "babel-plugin-styled-components": "^2.1.4",
+    "cypress": "^14.5.4",
     "typescript": "^5"
   }
 }

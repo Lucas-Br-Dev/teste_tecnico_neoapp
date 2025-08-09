@@ -7,6 +7,8 @@ import { useState } from "react";
 import { ModalCart } from "@/components/cart/ModalCart";
 import styled from "styled-components";
 import { ContextCartProvider } from "@/context/cartContext";
+import dynamic from "next/dynamic";
+
 
 const Flex = styled.div`
   display: flex;
@@ -22,18 +24,12 @@ export default function Home() {
   return (
     <Container>
       <ContextCartProvider>
-
         <HeaderBar onClick={() => setModalCart(true)} />
-
-
         <Flex>
           <ListMain />
           {modalCart && <ModalCart setModal={() => setModalCart(false)} />}
         </Flex>
-
-
       </ContextCartProvider>
-
       <FooterBar />
     </Container>
   );

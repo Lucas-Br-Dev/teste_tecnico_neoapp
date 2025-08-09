@@ -3,7 +3,7 @@ import { Buttons } from "@/styles/Buttons";
 import { GibiReqType } from "@/types/GibiItemsType"
 import { ArrowLeftCircle } from "@/ui/ArrowLeftCircle";
 import styled from "styled-components";
-import { creatorsType } from "@/types/creatorsType"; 
+import { creatorsType } from "@/types/creatorsType";
 import { useContext } from "react";
 import { ContextCart } from "@/context/cartContext";
 
@@ -50,7 +50,7 @@ const Thumbnails = styled.img`
 const ModalPrice = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     border-radius: 5px;
     @media screen and (max-width: 900){
         width: 100%;
@@ -67,7 +67,6 @@ const P = styled.p`
     @media screen and (max-width: 900px) {
         font-size: 20px;
     }
-
 `
 
 const Price = styled.div`
@@ -83,7 +82,6 @@ const Price = styled.div`
     @media screen and (max-width: 900px) {
         font-size: 28px;
     }
-
 `
 
 const Description = styled.p`
@@ -114,27 +112,27 @@ const Space = styled.div`
 const lancamento = (onsaleDate: string) => {
     const dataCorrigida = onsaleDate.replace(/([+-]\d{2})(\d{2})$/, "$1:$2");
     const data = new Date(dataCorrigida);
-  
-    if (isNaN(data.getTime())) {
-      return "Data inválida";
-    }
-  
-    return data.toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  }
 
-  const getCreators = (items: creatorsType[]) => {
+    if (isNaN(data.getTime())) {
+        return "Data inválida";
+    }
+
+    return data.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+    });
+}
+
+const getCreators = (items: creatorsType[]) => {
     return items.map((item) => (`${item.role}/ ${item.name}`))
-  }
+}
 
 export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
 
     const context = useContext(ContextCart)
-    if(!context) return null;
-    const {dispatch} = context
+    if (!context) return null;
+    const { dispatch } = context
 
     const itemCart = {
         id: selectGibi.id,
@@ -144,44 +142,35 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
         thumbnail: {
             path: selectGibi.thumbnail.path,
             extension: selectGibi.thumbnail.extension,
-          }
+        }
     }
 
 
     return (
         <ModalArea>
-
             <Space>
-                <Arrow onClick={() => {setSelectGibi()}} >{ArrowLeftCircle}</Arrow>
+                <Arrow onClick={() => { setSelectGibi() }} >{ArrowLeftCircle}</Arrow>
                 <h1>{selectGibi.title}</h1>
                 <div></div>
             </Space>
-
             <ShowInformations>
-
                 <Thumbnails
                     src={`${selectGibi.thumbnail.path}.${selectGibi.thumbnail.extension}`}
                     alt={selectGibi.title} >
                 </Thumbnails>
-
                 <ModalPrice>
                     <P>Published: {lancamento(selectGibi.dates[0].date)}</P>
                     <P>Creators: {getCreators(selectGibi.creators.items)}</P>
-
                     <Price>
                         <h1>${selectGibi.prices[0].price}</h1>
-                        <Buttons onClick={() => dispatch({type:"AddCart", payload: itemCart})} bgcolor={colors.vermelhoPrincipal} hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
+                        <Buttons onClick={() => dispatch({ type: "AddCart", payload: itemCart })} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
                     </Price>
-
                 </ModalPrice>
-
             </ShowInformations>
-
             <div>
                 <Description>description:</Description>
                 <P>{selectGibi.textObjects[0].text}</P>
             </div>
-
         </ModalArea>
     )
 }

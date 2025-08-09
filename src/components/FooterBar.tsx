@@ -1,8 +1,6 @@
 import { colors } from "@/data/colors"
 import styled from "styled-components"
 
-export const FooterBar = () => {
-
     const AreaFooter = styled.div`
         background-color: ${colors.cinzaEscuro};
         height: 45px;
@@ -11,6 +9,8 @@ export const FooterBar = () => {
         border-top-right-radius: 5px;
         color: black;
     `
+
+export const FooterBar = () => {
 
     return(
         <AreaFooter>
