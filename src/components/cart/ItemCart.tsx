@@ -1,8 +1,6 @@
-import { ContextCart } from "@/context/cartContext"
 import { colors } from "@/data/colors"
 import { gibiCartItemType } from "@/types/GibiCartItemType"
 import { Trash } from "@/ui/Trash"
-import { useContext } from "react"
 import styled from "styled-components"
 
 type Props = {
@@ -12,16 +10,23 @@ type Props = {
     handleDelete: () => void;
 };
 
-const ItemArea = styled.div`
+type props = {
+    $rare: boolean
+}
+
+const ItemArea = styled.div<props>`
     margin: 0 auto;
     background-color: ${colors.pretoSuave};
     padding: 16px;
     margin: 8px;
     border-radius: 5px;
+    ${props => props.$rare && `border: 2px solid ${colors.Destaques};`}
+    ${props => props.$rare && `box-shadow: 0px 0px 6px ${colors.Destaques};`}
 `
-const Thumbnails = styled.img`
+const Thumbnails = styled.img<props>`
    width: 100px;
-    box-shadow: 0px 0px 6px;
+    box-shadow: ${props => props.$rare ? `0px 0px 8px ${colors.Destaques}` : `0px 0px 8px ${colors.brancoSuave}`};
+    ${props => props.$rare && `border: 2px solid ${colors.Destaques};`}
     border-radius: 5px;
     transition: all ease-in-out 0.3s;
     &:hover{
@@ -70,26 +75,41 @@ const Qtd = styled.div`
     margin: 0 5px;
 `
 const Detail = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    font-size: 20px;
     gap: 16px;
     padding: 10px;
     align-items: center;
     border-bottom: 2px solid ${colors.cinzaClaro};
 `
 
-export const ItemCart = ({itemCart, handleAdd, handleReduce, handleDelete}: Props) => {
+const RareEle = styled.div`
+    background-color: ${colors.Destaques};
+    color: black;
+    padding: 2px 5px;
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 5px;
+`
+
+export const ItemCart = ({ itemCart, handleAdd, handleReduce, handleDelete }: Props) => {
 
     return (
-        <ItemArea>
+        <ItemArea $rare={itemCart.rare} >
             <Detail>
                 <Thumbnails
                     src={`${itemCart.thumbnail.path}.${itemCart.thumbnail.extension}`}
                     alt={itemCart.title}
+                    $rare={itemCart.rare ? true : false}
                 />
-                <p>{itemCart.title}</p>
+                <div>
+                    <p>{itemCart.title}</p>
+                    {itemCart.rare && <RareEle>RARE</RareEle>}
+                </div>
             </Detail>
             <Flex>
-                <Price>${ itemCart.price.toFixed(2) }</Price>
+                <Price>${itemCart.price.toFixed(2)}</Price>
                 <Flex>
                     <Flex>
                         <QtdSelect onClick={handleAdd} >+</QtdSelect>

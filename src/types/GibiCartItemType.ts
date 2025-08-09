@@ -7,5 +7,6 @@ export type gibiCartItemType = {
         path: string;
         extension: string;
       };
+    rare: boolean;
     
 }

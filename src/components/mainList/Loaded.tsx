@@ -1,4 +1,3 @@
-import { colors } from "@/data/colors";
 import { LoadedIcon } from "@/ui/LoadedIcon";
 import styled, { keyframes } from "styled-components"
 

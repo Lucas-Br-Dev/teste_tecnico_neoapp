@@ -4,12 +4,17 @@ import { GibiReqType } from "@/types/GibiItemsType"
 import { ArrowLeftCircle } from "@/ui/ArrowLeftCircle";
 import styled from "styled-components";
 import { creatorsType } from "@/types/creatorsType";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ContextCart } from "@/context/cartContext";
+import { Alert } from "../Alert";
 
 type Props = {
     selectGibi: GibiReqType;
     setSelectGibi: () => void
+}
+
+type props = {
+    $rare: boolean
 }
 
 const ModalArea = styled.div`
@@ -38,9 +43,13 @@ const ShowInformations = styled.div`
     }
 `
 
-const Thumbnails = styled.img`
+const Thumbnails = styled.img<props>`
   height: 600px;
   border-radius: 5px;
+  border: ${props => props.$rare && `16px solid ${colors.Destaques}`}; ; 
+  box-shadow: ${props => props.$rare && `0px 0px 8px ${colors.Destaques}`}; ; 
+  
+
   @media screen and (max-width: 900px) {
         height: 400px;
         margin: auto;
@@ -109,6 +118,18 @@ const Space = styled.div`
 
 `
 
+const RareEle = styled.div`
+    font-size: 32px;
+    margin-bottom: 10px;
+    background-color: ${colors.Destaques};
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    @media screen and (max-width: 900px) {
+        font-size: 26px;
+    }
+`
+
 const lancamento = (onsaleDate: string) => {
     const dataCorrigida = onsaleDate.replace(/([+-]\d{2})(\d{2})$/, "$1:$2");
     const data = new Date(dataCorrigida);
@@ -130,6 +151,9 @@ const getCreators = (items: creatorsType[]) => {
 
 export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
 
+
+    const [isOpen, setIsOpen] = useState(false);
+
     const context = useContext(ContextCart)
     if (!context) return null;
     const { dispatch } = context
@@ -142,12 +166,18 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
         thumbnail: {
             path: selectGibi.thumbnail.path,
             extension: selectGibi.thumbnail.extension,
-        }
+        },
+        rare: selectGibi.rare
     }
 
 
     return (
         <ModalArea>
+            {isOpen &&
+                <Alert
+                    isOpen={() => setIsOpen(false)} message="Added To Cart" messageButton="OK"
+                />
+            }
             <Space>
                 <Arrow onClick={() => { setSelectGibi() }} >{ArrowLeftCircle}</Arrow>
                 <h1>{selectGibi.title}</h1>
@@ -155,15 +185,17 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
             </Space>
             <ShowInformations>
                 <Thumbnails
+                    $rare={selectGibi.rare}
                     src={`${selectGibi.thumbnail.path}.${selectGibi.thumbnail.extension}`}
                     alt={selectGibi.title} >
                 </Thumbnails>
                 <ModalPrice>
+                    {selectGibi.rare && <RareEle>Rare</RareEle>}
                     <P>Published: {lancamento(selectGibi.dates[0].date)}</P>
                     <P>Creators: {getCreators(selectGibi.creators.items)}</P>
                     <Price>
                         <h1>${selectGibi.prices[0].price}</h1>
-                        <Buttons onClick={() => dispatch({ type: "AddCart", payload: itemCart })} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
+                        <Buttons onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), setIsOpen(true))} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
                     </Price>
                 </ModalPrice>
             </ShowInformations>

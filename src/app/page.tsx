@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <Container>
       <ContextCartProvider>
-        <HeaderBar onClick={() => setModalCart(true)} />
+        <HeaderBar onClick={() => setModalCart(!modalCart)} />
         <Flex>
           <ListMain />
           {modalCart && <ModalCart setModal={() => setModalCart(false)} />}

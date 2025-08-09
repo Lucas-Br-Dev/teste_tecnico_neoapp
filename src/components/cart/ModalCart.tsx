@@ -7,12 +7,14 @@ import { Buttons } from "@/styles/Buttons"
 import { ArrowRigth } from "@/ui/ArrowRigth"
 import { AnimationRigthToLeft } from "@/styles/AnimationRigthToLeft"
 import { ItemCart } from "./ItemCart"
+import { Alert } from "../Alert"
 
 type Props = {
-    setModal: () => void
+    setModal: () => void;
 }
 
 const Modal = styled.div`
+position: relative;
     width: 400px;
     background-color: ${colors.cinzaEscuro};
     border-radius: 10px;
@@ -56,7 +58,7 @@ const Cupom = styled.input`
 `
 const CupomArea = styled.div`
 width: 90%;
-    padding: 2px;
+    padding: 5px;
     border-radius: 5px;
     border: 1px solid ${colors.cinzaEscuro};
     margin: 5px 20px;
@@ -64,21 +66,6 @@ width: 90%;
     justify-content: center;
     align-items: center;
     font-size: 24px;
-`
-
-const ArrowEle = styled.div`
-    width: 30px;
-    height: 28px;
-    border-radius: 10px;
-    border: 2px solid ${colors.cinzaClaro};
-    background-color: ${colors.vermelhoPrincipal};
-    &:hover{
-        cursor: pointer;
-        background-color: ${colors.vermelhoPrincipal2};
-    }
-`
-const Total = styled.p`
-    font-size: 26px;
 `
 const BuyEle = styled.div`
     background-color: ${colors.pretoSuave};
@@ -97,17 +84,29 @@ export const ModalCart = ({ setModal }: Props) => {
     if (!context) return null;
     const { dispatch } = context
     const [valueTotal, setValueTotal] = useState(0)
+    const [couponInput, setCouponInput] = useState("")
+    const [isCouponApplied, setIsCouponApplied] = useState(false)
+
+    useEffect(() => {
+        if (couponInput.length === 6) {            
+            dispatch({ type: "Coupon", payload: { code: couponInput } });
+            if (couponInput === "COMM15" || couponInput === "RARE20") {
+                setIsCouponApplied(true);
+            } else {
+                setIsCouponApplied(false);
+
+            }
+        }
+    }, [couponInput])
 
     useEffect(() => {
         if (!context) return;
 
-        const total = context.gibiCart.reduce((acc, item) => {
-            return acc + item.price * item.quantity;
+        const total = context.gibiCart.reduce((valor, item) => {
+            return valor + item.price * item.quantity;
         }, 0);
         setValueTotal(total);
     }, [context?.gibiCart]);
-
-
 
     return (
         <AnimationRigthToLeft>
@@ -131,8 +130,16 @@ export const ModalCart = ({ setModal }: Props) => {
                         ))}
                         <BuyEle>
                             <CupomArea>Value Total: ${valueTotal.toFixed(2)}</CupomArea>
-                            <CupomArea><Cupom placeholder="CUPOM..." maxLength={4} type="text" /><ArrowEle>{ArrowRigth}</ArrowEle></CupomArea>
-                            <Buttons $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >Comprar</Buttons>
+                            <CupomArea>
+                                <Cupom
+                                    disabled={isCouponApplied}
+                                    placeholder="COUPON..."
+                                    maxLength={6} type="text"
+                                    value={couponInput}
+                                    onChange={(e) => setCouponInput(e.target.value.toLocaleUpperCase())}
+                                />
+                            </CupomArea>
+                            <Buttons $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >Buy</Buttons>
                         </BuyEle>
                     </Items>
                 }

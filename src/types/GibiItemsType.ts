@@ -1,4 +1,5 @@
 export type GibiReqType = {
+  rare: boolean,
   id: number;
   title: string;
   description: string | null;

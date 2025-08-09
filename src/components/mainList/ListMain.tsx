@@ -7,6 +7,7 @@ import { GibiReqType } from "@/types/GibiItemsType";
 import { Loaded } from "./Loaded";
 import { SelectGibiModal } from "./SelectGibiModal";
 import { AnimationRigthToLeft } from "@/styles/AnimationRigthToLeft";
+import { Alert } from "../Alert";
 
 
 const Grid = styled.div`
@@ -25,7 +26,9 @@ const Main = styled.main`
 
 export const ListMain = () => {
     const [gibiItems, setGibiItems] = useState<GibiReqType[] | null>(null);
-    const [selectGibi, setSelectGibi] = useState<null | GibiReqType>(null)
+    const [selectGibi, setSelectGibi] = useState<null | GibiReqType>(null);
+    const [isOpen, setIsOpen] = useState(false);
+
 
     useEffect(() => {
         if (selectGibi !== null) {
@@ -46,7 +49,35 @@ export const ListMain = () => {
 
             try {
                 const response = await axios.get(url);
-                setGibiItems(response.data.data.results);
+                const data = response.data.data.results;
+
+                // Filtrar apenas os gibis que possuem thumbnail
+                const thumbnailNotFould = "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
+                const filteredData = data.filter((item: GibiReqType) => `${item.thumbnail.path}.${item.thumbnail.extension}` !== thumbnailNotFould);
+
+
+                const gerarValoresAleatorio = () => {
+                    // Selecionar 10% dos gibis
+                    const qtdGibisRares = Math.ceil(filteredData.length * 0.10);
+                    const valores: number[] = []
+                    //selecionar aleatoriamente os 10%
+                    while (valores.length < qtdGibisRares) {
+                        const gerarValorAleatorio = (Math.random() * filteredData.length).toFixed(0)
+                        if (!valores.includes(Number(gerarValorAleatorio)))
+                            valores.push(Number(gerarValorAleatorio))
+                    }
+                    return valores
+                }
+                const indexAleatorios = gerarValoresAleatorio();
+
+                indexAleatorios.forEach((item) => {
+                    if (item - 1 <= 0) {
+                        filteredData[0].rare = true;
+                    } else {
+                        filteredData[item - 1].rare = true;
+                    }
+                })
+                setGibiItems(filteredData)
             } catch (error) {
                 console.error("Erro ao buscar gibis:", error);
                 alert("Houve um erro, renicie a página!")
@@ -67,8 +98,13 @@ export const ListMain = () => {
                         <Loaded />
                     ) : (
                         <Grid>
+                            {isOpen &&
+                                <Alert
+                                    isOpen={() => setIsOpen(false)} message="Added To Cart" messageButton="OK"
+                                />
+                            }
                             {gibiItems.map(item => (
-                                <GibiArea key={item.id} item={item} onClick={() => setSelectGibi(item)} />
+                                <GibiArea key={item.id} item={item} onClick={() => setSelectGibi(item)} isOpen={() => (setIsOpen(true), window.scrollTo({ top: 0, behavior: 'smooth' }))} />
                             ))}
                         </Grid>
                     )}

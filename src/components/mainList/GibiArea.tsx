@@ -2,19 +2,25 @@ import { ContextCart } from "@/context/cartContext";
 import { colors } from "@/data/colors"
 import { Buttons } from "@/styles/Buttons";
 import { GibiReqType } from "@/types/GibiItemsType"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components"
+import { Alert } from "../Alert";
 
 type Props = {
     item: GibiReqType;
     key: number;
-    onClick: () => void
+    onClick: () => void;
+    isOpen: () => void;
 };
 
-const GibiDiv = styled.div`
+type props = {
+    $rare: boolean
+}
+
+const GibiDiv = styled.div<props>`
     padding: 10px;
     color: black;
-    background-color: ${colors.brancoSuave};
+    background-color: ${props => props.$rare ? colors.Destaques : colors.brancoSuave};
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -30,6 +36,8 @@ const GibiDiv = styled.div`
 const Thumbnails = styled.img`
    width: 100%;
   height: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
   &:hover{
     cursor: pointer;
     box-shadow: 0px 0px 6px;
@@ -51,26 +59,28 @@ const Div = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    width: 100%;
 `
-export const GibiArea = ({ item, onClick }: Props) => {
+export const GibiArea = ({ item, onClick, isOpen }: Props) => {
 
     const context = useContext(ContextCart)
     if (!context) return null;
     const { dispatch } = context
 
     const itemCart = {
-            id: item.id,
-            title: item.title,
-            price: item.prices[0].price,
-            quantity: 1,
-            thumbnail: {
-                path: item.thumbnail.path,
-                extension: item.thumbnail.extension,
-              }
-        }
+        id: item.id,
+        title: item.title,
+        price: item.prices[0].price,
+        quantity: 1,
+        thumbnail: {
+            path: item.thumbnail.path,
+            extension: item.thumbnail.extension,
+        },
+        rare: item.rare
+    }
 
     return (
-        <GibiDiv key={item.id} >
+        <GibiDiv $rare={item.rare} key={item.id} >
             <Thumbnails
                 onClick={onClick}
                 src={`${item.thumbnail.path}.${item.thumbnail.extension}`}
@@ -78,7 +88,7 @@ export const GibiArea = ({ item, onClick }: Props) => {
             ></Thumbnails>
             <Div>
                 <TitleArea>{item.series.name}</TitleArea>
-                <Buttons onClick={() => dispatch({type:"AddCart", payload: itemCart})} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
+                <Buttons onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), isOpen())} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
                 <Buttons onClick={onClick} $bgcolor={colors.cinzaEscuro} $hovercolor={colors.pretoSuave} >See More</Buttons>
             </Div>
         </GibiDiv>
