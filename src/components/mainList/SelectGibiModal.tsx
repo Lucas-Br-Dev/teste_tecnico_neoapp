@@ -185,6 +185,7 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
             </Space>
             <ShowInformations>
                 <Thumbnails
+                    data-cy="thumbnail-gibi-modal"
                     $rare={selectGibi.rare}
                     src={`${selectGibi.thumbnail.path}.${selectGibi.thumbnail.extension}`}
                     alt={selectGibi.title} >
@@ -195,7 +196,7 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
                     <P>Creators: {getCreators(selectGibi.creators.items)}</P>
                     <Price>
                         <h1>${selectGibi.prices[0].price}</h1>
-                        <Buttons onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), setIsOpen(true))} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
+                        <Buttons data-cy="button-buy-modal" onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), setIsOpen(true))} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
                     </Price>
                 </ModalPrice>
             </ShowInformations>

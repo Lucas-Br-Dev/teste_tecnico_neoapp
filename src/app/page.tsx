@@ -27,7 +27,7 @@ export default function Home() {
         <HeaderBar onClick={() => setModalCart(!modalCart)} />
         <Flex>
           <ListMain />
-          {modalCart && <ModalCart setModal={() => setModalCart(false)} />}
+          {modalCart && <ModalCart data-cy="modal-cart" setModal={() => setModalCart(false)} />}
         </Flex>
       </ContextCartProvider>
       <FooterBar />

@@ -97,7 +97,7 @@ export const ListMain = () => {
                     {gibiItems === null ? (
                         <Loaded />
                     ) : (
-                        <Grid>
+                        <Grid data-cy="list-main-grid" >
                             {isOpen &&
                                 <Alert
                                     isOpen={() => setIsOpen(false)} message="Added To Cart" messageButton="OK"

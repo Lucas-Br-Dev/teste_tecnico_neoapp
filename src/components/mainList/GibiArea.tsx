@@ -82,14 +82,15 @@ export const GibiArea = ({ item, onClick, isOpen }: Props) => {
     return (
         <GibiDiv $rare={item.rare} key={item.id} >
             <Thumbnails
+                data-cy="thumbnail-gibi"
                 onClick={onClick}
                 src={`${item.thumbnail.path}.${item.thumbnail.extension}`}
                 alt={item.title}
             ></Thumbnails>
             <Div>
                 <TitleArea>{item.series.name}</TitleArea>
-                <Buttons onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), isOpen())} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
-                <Buttons onClick={onClick} $bgcolor={colors.cinzaEscuro} $hovercolor={colors.pretoSuave} >See More</Buttons>
+                <Buttons data-cy="modal-button-buy" onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), isOpen())} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
+                <Buttons data-cy="modal-button-seemore" onClick={onClick} $bgcolor={colors.cinzaEscuro} $hovercolor={colors.pretoSuave} >See More</Buttons>
             </Div>
         </GibiDiv>
     )

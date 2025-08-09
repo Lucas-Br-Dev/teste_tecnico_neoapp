@@ -48,15 +48,15 @@ const Area = styled.div`
     margin-left: 20px;
 `
 
-export const HeaderBar = ({ onClick }:Props ) => {
+export const HeaderBar = ({ onClick }: Props) => {
 
     const context = useContext(ContextCart)
 
     return (
         <HeaderStyled>
             <Area></Area>
-            <Logo>Marvell</Logo>             
-            <Cart onClick={onClick} >{CartIcon}{context?.gibiCart.length}</Cart>
+            <Logo>Marvell</Logo>
+            <Cart data-cy="cart-icon" onClick={onClick} >{CartIcon}{context?.gibiCart.length}</Cart>
         </HeaderStyled>
 
     )

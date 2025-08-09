@@ -112,11 +112,11 @@ export const ItemCart = ({ itemCart, handleAdd, handleReduce, handleDelete }: Pr
                 <Price>${itemCart.price.toFixed(2)}</Price>
                 <Flex>
                     <Flex>
-                        <QtdSelect onClick={handleAdd} >+</QtdSelect>
+                        <QtdSelect data-cy="cart-selector-add" onClick={handleAdd} >+</QtdSelect>
                         <Qtd>{itemCart.quantity}</Qtd>
-                        <QtdSelect onClick={handleReduce} >-</QtdSelect>
+                        <QtdSelect data-cy="cart-selector-remove" onClick={handleReduce} >-</QtdSelect>
                     </Flex>
-                    <TrashEle onClick={handleDelete} >{Trash}</TrashEle>
+                    <TrashEle data-cy="cart-selector-trash" onClick={handleDelete} >{Trash}</TrashEle>
                 </Flex>
             </Flex>
         </ItemArea>

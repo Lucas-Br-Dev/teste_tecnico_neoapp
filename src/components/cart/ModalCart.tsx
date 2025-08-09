@@ -88,7 +88,7 @@ export const ModalCart = ({ setModal }: Props) => {
     const [isCouponApplied, setIsCouponApplied] = useState(false)
 
     useEffect(() => {
-        if (couponInput.length === 6) {            
+        if (couponInput.length === 6) {
             dispatch({ type: "Coupon", payload: { code: couponInput } });
             if (couponInput === "COMM15" || couponInput === "RARE20") {
                 setIsCouponApplied(true);
@@ -132,6 +132,7 @@ export const ModalCart = ({ setModal }: Props) => {
                             <CupomArea>Value Total: ${valueTotal.toFixed(2)}</CupomArea>
                             <CupomArea>
                                 <Cupom
+                                    data-cy="coupon-input"
                                     disabled={isCouponApplied}
                                     placeholder="COUPON..."
                                     maxLength={6} type="text"

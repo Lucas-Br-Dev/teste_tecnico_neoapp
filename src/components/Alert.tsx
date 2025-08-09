@@ -29,18 +29,19 @@ const AlertBox = styled.div`
 `
 
 type Props = {
-    message: string;
-    messageButton: string;
-    isOpen: () => void;
+  message: string;
+  messageButton: string;
+  isOpen: () => void;
 }
 
 export const Alert = ({ message, messageButton, isOpen }: Props) => {
-    return (
+  return (
 
-<Fixed>
+    <Fixed>
       <AlertBox>
         <div>{message}</div>
         <Buttons
+          data-cy="button-alert"
           $bgcolor={colors.vermelhoPrincipal}
           $hovercolor={colors.vermelhoPrincipal2}
           onClick={isOpen}
@@ -48,5 +49,5 @@ export const Alert = ({ message, messageButton, isOpen }: Props) => {
           {messageButton}
         </Buttons>
       </AlertBox>
-    </Fixed>    )
+    </Fixed>)
 }

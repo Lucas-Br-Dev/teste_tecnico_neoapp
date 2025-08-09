@@ -8,7 +8,7 @@ describe('Teste do carregamento inicial (Resposta da API) e navegação pelo sit
 
   it('Esperar resposta da api e renderizar o grid dos gibis', () => {
 
-    cy.get('.ListMain__Grid-sc-14a6596f-0').should('be.visible')
+    cy.get('[data-cy=list-main-grid]').should('be.visible')
 
   })
 
