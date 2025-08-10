@@ -8,6 +8,7 @@ import { Loaded } from "./Loaded";
 import { SelectGibiModal } from "./SelectGibiModal";
 import { AnimationRigthToLeft } from "@/styles/AnimationRigthToLeft";
 import { Alert } from "../Alert";
+import { Flamenco } from "next/font/google";
 
 
 const Grid = styled.div`
@@ -45,7 +46,7 @@ export const ListMain = () => {
         const fetchApiMarvel = async () => {
             const ts = new Date().getTime();
             const hash = md5(ts + privateKey + publicKey).toString();
-            const url = `https://gateway.marvel.com/v1/public/comics?format=comic&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+            const url = `ttps://gateway.marvel.com/v1/public/comics?format=comic&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
             try {
                 const response = await axios.get(url);
@@ -80,7 +81,8 @@ export const ListMain = () => {
                 setGibiItems(filteredData)
             } catch (error) {
                 console.error("Erro ao buscar gibis:", error);
-                alert("Houve um erro, renicie a página!")
+                setIsOpen(true);
+                
             }
         }
         fetchApiMarvel()
@@ -88,6 +90,7 @@ export const ListMain = () => {
 
     return (
         <Main>
+            {isOpen && <Alert action={() => window.location.reload()} isOpen={() => setIsOpen(false)} message="error when loading" messageButton="OK" />}
             {selectGibi ? (
                 <AnimationRigthToLeft>
                     <SelectGibiModal selectGibi={selectGibi} setSelectGibi={() => setSelectGibi(null)} />

@@ -105,7 +105,7 @@ export const ItemCart = ({ itemCart, handleAdd, handleReduce, handleDelete }: Pr
                 />
                 <div>
                     <p>{itemCart.title}</p>
-                    {itemCart.rare && <RareEle>RARE</RareEle>}
+                    {itemCart.rare && <RareEle data-cy="rare-element" >RARE</RareEle>}
                 </div>
             </Detail>
             <Flex>

@@ -32,9 +32,10 @@ type Props = {
   message: string;
   messageButton: string;
   isOpen: () => void;
+  action?: () => void;
 }
 
-export const Alert = ({ message, messageButton, isOpen }: Props) => {
+export const Alert = ({ message, messageButton, isOpen, action }: Props) => {
   return (
 
     <Fixed>
@@ -44,7 +45,7 @@ export const Alert = ({ message, messageButton, isOpen }: Props) => {
           data-cy="button-alert"
           $bgcolor={colors.vermelhoPrincipal}
           $hovercolor={colors.vermelhoPrincipal2}
-          onClick={isOpen}
+          onClick={() => {isOpen(); action && action()}}
         >
           {messageButton}
         </Buttons>

@@ -89,7 +89,7 @@ export const GibiArea = ({ item, onClick, isOpen }: Props) => {
             ></Thumbnails>
             <Div>
                 <TitleArea>{item.series.name}</TitleArea>
-                <Buttons data-cy="modal-button-buy" onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), isOpen())} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
+                <Buttons data-cy="button-buy-grid" onClick={() => (dispatch({ type: "AddCart", payload: itemCart }), isOpen())} $bgcolor={colors.vermelhoPrincipal} $hovercolor={colors.vermelhoPrincipal2} >BUY</Buttons>
                 <Buttons data-cy="modal-button-seemore" onClick={onClick} $bgcolor={colors.cinzaEscuro} $hovercolor={colors.pretoSuave} >See More</Buttons>
             </Div>
         </GibiDiv>

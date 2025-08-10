@@ -8,52 +8,76 @@ describe('Teste do carregamento inicial (Resposta da API) e navegação pelo sit
 
   it('Esperar resposta da api e renderizar o grid dos gibis', () => {
 
-    cy.get('[data-cy=list-main-grid]').should('be.visible')
+    cy.get('[data-cy="list-main-grid"]').should('be.visible')
 
   })
 
   it('Verificar se o carrinho realmente inicia vazio e renderiza o gibi apos clicar em Comprar', () => {
 
-    cy.get('.HeaderBar__Cart-sc-15e3c48a-2').should('be.visible').click()
+    cy.get('[data-cy="cart-icon"]').should('be.visible').click()
 
     cy.get('h1').should('contain.text', 'The cart is empty')
 
-    cy.get(':nth-child(2) > .GibiArea__Div-sc-ac34b54b-3 > .hdYFcv').click()
+    cy.get('[data-cy="button-buy-grid"]').first().click()
 
-    cy.get(':nth-child(1) > .ItemCart__Detail-sc-a8c698aa-7').should('be.visible')
+    cy.get('[data-cy="button-alert"]').click()
 
-    cy.get('.ModalCart__Items-sc-caf45618-3').should('be.visible').and('contain.text', '1')
+    cy.get('[data-cy="coupon-input"]').should('be.visible')
   })
 
   it('Verificar funcionaliades do cart (carrinho de compras)', () => {
-    cy.get('.HeaderBar__Cart-sc-15e3c48a-2').should('be.visible').click()
+
+    cy.get('[data-cy="cart-icon"]').should('be.visible').click()
+
+    cy.get('[data-cy="button-buy-grid"]').first().should('be.visible').click()
+
+    cy.get('[data-cy="button-alert"]').click()
+
+    cy.get('[data-cy="cart-selector-add"]').should('be.visible').click()
+
+    cy.get('.ItemCart__Qtd-sc-de580d41-6').should('contain.text', '2')
+
+    cy.get('[data-cy="cart-selector-trash"]').should('be.visible').click()
 
     cy.get('h1').should('contain.text', 'The cart is empty')
 
-    cy.get(':nth-child(1) > .GibiArea__Div-sc-ac34b54b-3 > .hdYFcv').click()
+  })
 
-    cy.get('.ModalCart__Items-sc-caf45618-3').should('be.visible')
+  it('Verificar se o cupom de desconto funciona corretamente', () => {  
 
-    cy.get(':nth-child(2) > :nth-child(2) > .ItemCart__Flex-sc-a8c698aa-3 > :nth-child(1)')
-    .should('be.visible')
-    .click()
-    
-    cy.get('.ModalCart__Items-sc-caf45618-3').should('contain.text', '2')
+    cy.get('[data-cy="cart-icon"]').should('be.visible').click()
 
+    cy.get('[data-cy="button-buy-grid"]').first().should('be.visible').click()
+
+    cy.get('[data-cy="button-alert"]').click()
+
+    cy.document().then(doc => {
+      const existe = doc.querySelector('[data-cy="rare-element"]') !== null
+      if (existe) {
+        cy.get('[data-cy="coupon-input"]').clear().type('RARE20)')
+      } else {
+        cy.get('[data-cy="coupon-input"]').clear().type('COMM15')
+      }
+    })
+
+    cy.get('[data-cy="coupon-input"]').should('be.disabled') 
 
   })
 
   it('Renderiza o Gibi individualmente apos clicar na capa ou botao de (See more) do mesmo', () => {
 
-    cy.get(':nth-child(1) > .GibiArea__Thumbnails-sc-ac34b54b-1').should('be.visible').click()
+    cy.get('[data-cy="thumbnail-gibi"]').first().should('be.visible').click()
 
-    cy.get('.SelectGibiModal__ModalArea-sc-2f58c34b-0').should('be.visible')
+    cy.get('[data-cy="button-buy-modal"]').should('be.visible')
 
-    cy.get('.SelectGibiModal__Arrow-sc-2f58c34b-7').should('be.visible').click()
+    cy.get('.SelectGibiModal__Arrow-sc-a66cafae-7').click()
 
-    cy.get(':nth-child(1) > .GibiArea__Div-sc-ac34b54b-3 > .fQCiMl').should('be.visible').click()
+    cy.get('[data-cy="list-main-grid"]').should('be.visible')
 
-    cy.get('.SelectGibiModal__ModalArea-sc-2f58c34b-0').should('be.visible')
+    cy.get('[data-cy="modal-button-seemore"]').first().should('be.visible').click()
+
+    cy.get('[data-cy="button-buy-modal"]').should('be.visible')
+
   })
 
 
