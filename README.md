@@ -1,7 +1,12 @@
 # Teste técnico Neo App
 
-Link do projeto: https://teste-tecnico-neoapp.vercel.app/
+Link do Site: https://teste-tecnico-neoapp.vercel.app/
 
+Informações para contato:
+- WhatsApp: (66) 98447-5046
+- Email: lucas.br.dev@gmail.com
+
+  
 ## Funcionalidades
 
 - Listagem com paginação de todas as HQs
@@ -53,7 +58,7 @@ Link do projeto: https://teste-tecnico-neoapp.vercel.app/
 - Pensando na funcionalidade de selecionar itens por meio do INDEX do array, calculo o valor inteiro que corresponde a 10% dos HQ's
 -  Utilizo o Math para gerar valores aleatorios inteiros e diferentes como [1, 4] onde
  estes irão corresponder a quantidade de 10% dos gibis e utilizado para selecionar o INDEX
-- São passados para o index do array e atribuido um novo valor como (RARE: true;)
+- São passados para o index do array e atribuindo um novo valor como (RARE: true;)
 - Este ativa demais componentes e elementos no código.
 
 4. Cupom para items raros e comuns
