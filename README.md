@@ -14,6 +14,8 @@
 - Uso de **HTML semântico** para melhor acessibilidade e SEO
 - Componentização modular para melhor organização e manutenção do código
 - Gerenciamento do estado do carrinho via **Context API** com **Reducer**
+- Web design Responsivo
+- Deploy na Vercel
 
 
 ## Tecnologias Utilizadas
