@@ -50,7 +50,7 @@ Informações para contato:
 - Para a requisição, utilizei Axios, pois a API exigia autenticação via hash MD5 e outros parâmetros específicos.
 
 2. Verifiquei e identifiquei várias falhas na resposta da API, como:  
-- Demora para retorno da requisição  
+- Demora e inconsistência para retorno da requisição  
 - Informações em branco ou nulas, como a falta de thumbnails, que quebravam o site por ausência de dados essenciais  
 - Identifiquei um padrão nessas respostas “quebradas” e implementei uma filtragem para retornar apenas os dados válidos e completos
 
