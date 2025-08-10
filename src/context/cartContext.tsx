@@ -1,4 +1,4 @@
-import { createContext, useReducer, ReactNode } from "react";
+import { createContext, useReducer, ReactNode, useEffect } from "react";
 import { gibiCartItemType } from "@/types/GibiCartItemType";
 import { CartReducerList, CartActions } from "@/reducers/CartReducerList";
 

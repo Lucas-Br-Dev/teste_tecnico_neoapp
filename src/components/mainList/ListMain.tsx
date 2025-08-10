@@ -29,6 +29,7 @@ export const ListMain = () => {
     const [gibiItems, setGibiItems] = useState<GibiReqType[] | null>(null);
     const [selectGibi, setSelectGibi] = useState<null | GibiReqType>(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [alertApi, setAlertApi] = useState(false);
 
 
     useEffect(() => {
@@ -46,7 +47,7 @@ export const ListMain = () => {
         const fetchApiMarvel = async () => {
             const ts = new Date().getTime();
             const hash = md5(ts + privateKey + publicKey).toString();
-            const url = `ttps://gateway.marvel.com/v1/public/comics?format=comic&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+            const url = `https://gateway.marvel.com/v1/public/comics?format=comic&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
             try {
                 const response = await axios.get(url);
@@ -81,7 +82,7 @@ export const ListMain = () => {
                 setGibiItems(filteredData)
             } catch (error) {
                 console.error("Erro ao buscar gibis:", error);
-                setIsOpen(true);
+                setAlertApi(true);
                 
             }
         }
@@ -90,7 +91,7 @@ export const ListMain = () => {
 
     return (
         <Main>
-            {isOpen && <Alert action={() => window.location.reload()} isOpen={() => setIsOpen(false)} message="error when loading" messageButton="OK" />}
+                {alertApi && <Alert action={() => window.location.reload()} isOpen={() => setAlertApi(false)} message="error when loading" messageButton="OK" />}
             {selectGibi ? (
                 <AnimationRigthToLeft>
                     <SelectGibiModal selectGibi={selectGibi} setSelectGibi={() => setSelectGibi(null)} />

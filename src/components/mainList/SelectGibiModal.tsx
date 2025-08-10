@@ -179,7 +179,7 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
                 />
             }
             <Space>
-                <Arrow onClick={() => { setSelectGibi() }} >{ArrowLeftCircle}</Arrow>
+                <Arrow data-cy="bottom-return" onClick={() => { setSelectGibi() }} >{ArrowLeftCircle}</Arrow>
                 <h1>{selectGibi.title}</h1>
                 <div></div>
             </Space>
@@ -202,7 +202,7 @@ export const SelectGibiModal = ({ selectGibi, setSelectGibi }: Props) => {
             </ShowInformations>
             <div>
                 <Description>description:</Description>
-                <P>{selectGibi.textObjects[0].text}</P>
+                <P>{selectGibi.textObjects[0].text.replace(/<br\s*\/?>/gi, '\n')}</P>
             </div>
         </ModalArea>
     )
